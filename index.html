@@ -62,14 +62,18 @@
         let diceValues = [];
         let backgroundPlane;
 
-        // ✅ KORJATTU POLKU, KÄYTETÄÄN TÄYTTÄ GITHUB PAGES -URLIA
+     
+        const basePath = window.location.pathname.includes("Dice_Roller_Program") 
+            ? "/Dice_Roller_Program/images/" 
+            : "images/";
+
         const texturePaths = [
-            'https://moontags.github.io/Dice_Roller_Program/images/Dice-1-b.svg', 
-            'https://moontags.github.io/Dice_Roller_Program/images/Dice-2-b.svg',
-            'https://moontags.github.io/Dice_Roller_Program/images/Dice-3-b.svg', 
-            'https://moontags.github.io/Dice_Roller_Program/images/Dice-4-b.svg',
-            'https://moontags.github.io/Dice_Roller_Program/images/Dice-5-b.svg', 
-            'https://moontags.github.io/Dice_Roller_Program/images/Dice-6-b.svg'
+            `${basePath}Dice-1-b.svg`, 
+            `${basePath}Dice-2-b.svg`,
+            `${basePath}Dice-3-b.svg`, 
+            `${basePath}Dice-4-b.svg`,
+            `${basePath}Dice-5-b.svg`, 
+            `${basePath}Dice-6-b.svg`
         ];
 
         function init() {
@@ -121,7 +125,7 @@
             let texturesLoaded = 0;
 
             texturePaths.forEach((path, index) => {
-                console.log("Loading texture:", path); // 🟢 Tulostaa ladattavan kuvan polun
+                console.log("Loading texture:", path); 
 
                 loader.load(path, (texture) => {
                     texture.flipY = false;
@@ -137,11 +141,11 @@
                     texturesLoaded++;
 
                     if (texturesLoaded === texturePaths.length) {
-                        console.log("All textures loaded!"); // 🟢 Näyttää kun kaikki kuvat ovat ladattu
+                        console.log("All textures loaded!"); 
                         createDice();
                     }
                 }, undefined, (error) => {
-                    console.error("Error loading texture:", path, error); // 🔴 Näyttää virheen jos kuvaa ei löydy
+                    console.error("Error loading texture:", path, error);
                 });
             });
         }
@@ -163,6 +167,21 @@
             requestAnimationFrame(animate);
             backgroundPlane.rotation.z += 0.006;
             renderer.render(scene, camera);
+        }
+
+        function easeOut(t) {
+            return 1 - Math.pow(1 - t, 3);
+        }
+
+        function getRotationForValue(value) {
+            return [
+                { x: 0, y: 0 },
+                { x: -Math.PI / 2, y: 0 },
+                { x: 0, y: Math.PI / 2 },
+                { x: 0, y: -Math.PI / 2 },
+                { x: Math.PI / 2, y: 0 },
+                { x: Math.PI, y: 0 }
+            ][value - 1];
         }
 
         function rollDice() {
