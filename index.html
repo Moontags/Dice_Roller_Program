@@ -62,20 +62,23 @@
         let diceValues = [];
         let backgroundPlane;
 
-     
-        const basePath = window.location.pathname.includes("Dice_Roller_Program") 
-            ? "/Dice_Roller_Program/images/" 
-            : "images/";
+        // 🔹 Määritetään basePath automaattisesti paikalliselle kehitykselle ja GitHub Pagesille
+        const isLocal = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost";
+        const basePath = isLocal 
+            ? "images/" 
+            : "/Dice_Roller_Program/images/";
+
+        console.log("Base path for images:", basePath);
 
         const texturePaths = [
-            `${basePath}Dice-1-b.svg`, 
-            `${basePath}Dice-2-b.svg`,
-            `${basePath}Dice-3-b.svg`, 
-            `${basePath}Dice-4-b.svg`,
-            `${basePath}Dice-5-b.svg`, 
-            `${basePath}Dice-6-b.svg`
+            basePath + "Dice-1-b.svg",
+            basePath + "Dice-2-b.svg",
+            basePath + "Dice-3-b.svg",
+            basePath + "Dice-4-b.svg",
+            basePath + "Dice-5-b.svg",
+            basePath + "Dice-6-b.svg"
         ];
-
+        
         function init() {
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0xf0f4f8);
@@ -125,7 +128,7 @@
             let texturesLoaded = 0;
 
             texturePaths.forEach((path, index) => {
-                console.log("Loading texture:", path); 
+                console.log("Loading texture:", path);
 
                 loader.load(path, (texture) => {
                     texture.flipY = false;
@@ -141,7 +144,7 @@
                     texturesLoaded++;
 
                     if (texturesLoaded === texturePaths.length) {
-                        console.log("All textures loaded!"); 
+                        console.log("All textures loaded!");
                         createDice();
                     }
                 }, undefined, (error) => {
