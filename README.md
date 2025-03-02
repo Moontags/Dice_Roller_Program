@@ -3,7 +3,7 @@
 ![3D Dice Roller](images/roll.png)
 
 ## 🌐 Live Demo
-[View the project on GitHub Pages](https://yourusername.github.io/repository-name/)
+[View the project on GitHub Pages](https://moontags.github.io/Dice_Roller_Program/)
 
 ## 📖 About the Project
 This project is a **3D Dice Roller** built using **Three.js**. The application simulates rolling two dice in a visually appealing 3D space with real-time animations and a wireframe background. The results of the dice roll are displayed on the screen, ensuring accurate values based on the rendered dice.
