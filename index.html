@@ -62,15 +62,16 @@
         let diceValues = [];
         let backgroundPlane;
 
-                const texturePaths = [
-                'Dice_Roller_Program/images/Dice-1-b.svg', 
-                'Dice_Roller_Program/images/Dice-2-b.svg',
-                'Dice_Roller_Program/images/Dice-3-b.svg', 
-                'Dice_Roller_Program/images/Dice-4-b.svg',
-                'Dice_Roller_Program/images/Dice-5-b.svg', 
-                'Dice_Roller_Program/images/Dice-6-b.svg'
-            ];
-            
+        // ✅ KORJATTU POLKU, KÄYTETÄÄN TÄYTTÄ GITHUB PAGES -URLIA
+        const texturePaths = [
+            'https://moontags.github.io/Dice_Roller_Program/images/Dice-1-b.svg', 
+            'https://moontags.github.io/Dice_Roller_Program/images/Dice-2-b.svg',
+            'https://moontags.github.io/Dice_Roller_Program/images/Dice-3-b.svg', 
+            'https://moontags.github.io/Dice_Roller_Program/images/Dice-4-b.svg',
+            'https://moontags.github.io/Dice_Roller_Program/images/Dice-5-b.svg', 
+            'https://moontags.github.io/Dice_Roller_Program/images/Dice-6-b.svg'
+        ];
+
         function init() {
             scene = new THREE.Scene();
             scene.background = new THREE.Color(0xf0f4f8);
@@ -120,6 +121,8 @@
             let texturesLoaded = 0;
 
             texturePaths.forEach((path, index) => {
+                console.log("Loading texture:", path); // 🟢 Tulostaa ladattavan kuvan polun
+
                 loader.load(path, (texture) => {
                     texture.flipY = false;
                     texture.colorSpace = THREE.SRGBColorSpace;
@@ -134,8 +137,11 @@
                     texturesLoaded++;
 
                     if (texturesLoaded === texturePaths.length) {
+                        console.log("All textures loaded!"); // 🟢 Näyttää kun kaikki kuvat ovat ladattu
                         createDice();
                     }
+                }, undefined, (error) => {
+                    console.error("Error loading texture:", path, error); // 🔴 Näyttää virheen jos kuvaa ei löydy
                 });
             });
         }
@@ -199,21 +205,6 @@
             }
 
             requestAnimationFrame(animateRoll);
-        }
-
-        function easeOut(t) {
-            return 1 - Math.pow(1 - t, 3);
-        }
-
-        function getRotationForValue(value) {
-            return [
-                { x: 0, y: 0 },
-                { x: -Math.PI / 2, y: 0 },
-                { x: 0, y: Math.PI / 2 },
-                { x: 0, y: -Math.PI / 2 },
-                { x: Math.PI / 2, y: 0 },
-                { x: Math.PI, y: 0 }
-            ][value - 1];
         }
 
         function updateSum(sum) {
